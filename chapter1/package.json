@@ -1,0 +1,19 @@
+{
+  "name": "chapter1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsx server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "tsx": "^4.19.2"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
