@@ -1,13 +1,11 @@
-FROM node:alpine
+FROM golang:1.23
 
-WORKDIR ./app
+WORKDIR /usr/src/app
 
-COPY package.json package.json
-
-RUN npm install
+COPY go.mod go.sum ./
+RUN go mod download && go mod verify
 
 COPY . .
+RUN go build -v -o /usr/local/bin/app ./...
 
-EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["app"]
