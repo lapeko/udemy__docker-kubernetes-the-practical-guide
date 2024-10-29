@@ -1,4 +1,4 @@
-module github.com/lapeko/udemy__docker-kubernetes-the-practical-guide/chapter2
+module github.com/lapeko/udemy__docker-kubernetes-the-practical-guide/chapter2/example1-web-server
 
 go 1.21.4
 
