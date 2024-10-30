@@ -14,6 +14,7 @@ func main() {
 
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/public", "./public")
+	r.Static("/feedback", "./permanent-data")
 
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{"title": "Feedback app"})
@@ -27,7 +28,7 @@ func main() {
 		title := c.PostForm("title")
 		text := c.PostForm("text")
 
-		fileName := fmt.Sprintf("%s.txt", strings.ToLower(title))
+		fileName := strings.ToLower(title)
 		tempFilePath := fmt.Sprintf("./temporary-data/%s", fileName)
 		permFilePath := fmt.Sprintf("./permanent-data/%s", fileName)
 
