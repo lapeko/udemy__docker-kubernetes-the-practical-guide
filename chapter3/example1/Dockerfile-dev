@@ -9,6 +9,9 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-EXPOSE 3000
+ARG DEFAULT_PORT=3000
+ENV PORT $DEFAULT_PORT
+
+EXPOSE $PORT
 
 CMD ["reflex", "-r", "\\.go$", "--decoration=plain", "--start-service", "go", "run", "./cmd/api/main.go"]

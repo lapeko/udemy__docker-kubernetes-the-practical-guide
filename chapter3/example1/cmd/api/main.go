@@ -58,7 +58,13 @@ func main() {
 		c.Redirect(http.StatusSeeOther, "/")
 	})
 
-	r.Run(":3000")
+	port := os.Getenv("PORT")
+
+	if port == "" {
+		port = "3000"
+	}
+
+	log.Fatalln(r.Run(fmt.Sprintf(":%s", port)))
 }
 
 func CopyFile(in string, out string) error {
