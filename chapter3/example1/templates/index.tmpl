@@ -1,0 +1,12 @@
+{{template "header.tmpl"}}
+<h1>{{.title}}</h1>
+<form method="post">
+    <label>Title:
+        <input type="text" name="title" />
+    </label>
+    <label>Document text:
+        <input type="text" name="text" />
+    </label>
+    <input type="submit" value="send">
+</form>
+{{template "footer.tmpl"}}

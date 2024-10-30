@@ -1,0 +1,4 @@
+body {
+    min-height: 100svh;
+    background-image: linear-gradient(180deg, deepskyblue, deeppink);
+}
