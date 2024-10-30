@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -50,11 +51,33 @@ func main() {
 			return
 		}
 
-		if err := os.Rename(tempFilePath, permFilePath); err != nil {
+		if err := CopyFile(tempFilePath, permFilePath); err != nil {
 			log.Fatalln(err)
 		}
+
 		c.Redirect(http.StatusSeeOther, "/")
 	})
 
 	r.Run(":3000")
+}
+
+func CopyFile(in string, out string) error {
+	inFile, err := os.Open(in)
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer inFile.Close()
+
+	outFile, err := os.Create(out)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer outFile.Close()
+
+	if _, err := io.Copy(outFile, inFile); err != nil {
+		log.Fatalln(err)
+	}
+
+	return nil
 }
