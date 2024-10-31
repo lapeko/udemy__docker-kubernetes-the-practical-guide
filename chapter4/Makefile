@@ -1,8 +1,12 @@
-.PHONY: build-be, run-mongo
+.PHONY: build-be, build-fe, run-mongo, run-be, run-fe
 
 build-be:
 	cd ./backend && \
 	docker build -t chapter4-be .
+
+build-fe:
+	cd ./frontend && \
+	docker build -t chapter5-fe .
 
 run-mongo:
 	docker run --rm -d --name chapter4-mongo \
@@ -22,3 +26,12 @@ run-be:
 		--network chapter4 \
 		-p 3000:3000 \
 		chapter4-be
+
+run-fe:
+	cd ./frontend && \
+	docker run --rm -d --name chapter5-fe \
+		-v ${PWD}/frontend:/app \
+		-v /app/node_modules \
+		--network chapter4 \
+		-p 8000:8000 \
+		chapter5-fe
