@@ -25,6 +25,7 @@ func New() *Api {
 func (a *Api) SetupRoutes() {
 	r := gin.Default()
 	a.ginEngine = r
+	a.ginEngine.Use(corsMiddleware())
 
 	r.GET("/", a.getHandler)
 	r.POST("/", a.postHandler)

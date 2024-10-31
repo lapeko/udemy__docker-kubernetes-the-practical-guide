@@ -6,7 +6,7 @@ build-be:
 
 build-fe:
 	cd ./frontend && \
-	docker build -t chapter5-fe .
+	docker build -t chapter5-fe --build-arg API_URL=http://localhost:3000 .
 
 run-mongo:
 	docker run --rm -d --name chapter4-mongo \
@@ -29,9 +29,10 @@ run-be:
 
 run-fe:
 	cd ./frontend && \
-	docker run --rm -d --name chapter5-fe \
+	docker run --rm --name chapter5-fe \
 		-v ${PWD}/frontend:/app \
 		-v /app/node_modules \
+		-v /app/src/environments \
 		--network chapter4 \
 		-p 8000:8000 \
 		chapter5-fe
