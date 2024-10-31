@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {TodoResponse} from "../utils/TodoResponse.ts";
 
-export const TodoListItem: FC<{todos: TodoResponse[]}> = ({todos}) => <ul>
-  {todos.map(todo => <li key={todo.id}>{todo.title}</li>)}
-</ul>
+export const TodoListItem: FC<{todo: TodoResponse, onClick: (id: string) => void}> = ({todo, onClick}) => (
+  <li key={todo.id} onClick={() => onClick(todo.id)}>{todo.title}</li>
+);
