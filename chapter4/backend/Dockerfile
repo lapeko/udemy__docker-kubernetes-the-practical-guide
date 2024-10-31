@@ -14,4 +14,4 @@ ENV PORT=3000
 
 EXPOSE $PORT
 
-CMD ["reflex", "-r", "\\.go$", "--decoration=plain", "--start-service", "go", "run", "./main.go"]
+CMD ["reflex", "-r", "\\.go$", "--decoration=plain", "--start-service", "go", "run", "./cmd/api/main.go"]
