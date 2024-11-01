@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: "mongo:4"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      - chapter4-mongo:/data/db
+
+  backend:
+    build: ./backend
+    environment:
+      - MONGO_USER=mongoadmin
+      - MONGO_PASS=secret
+    volumes:
+      - ./backend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        API_URL: http://localhost:3000
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/src/environments
+    ports:
+      - "8000:8000"
+    depends_on:
+      - backend
+
+volumes:
+  chapter4-mongo:

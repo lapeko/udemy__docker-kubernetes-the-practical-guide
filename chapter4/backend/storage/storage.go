@@ -25,7 +25,7 @@ func (s *Storage) Connect() error {
 	user := os.Getenv("MONGO_USER")
 	pass := os.Getenv("MONGO_PASS")
 
-	uri := fmt.Sprintf("mongodb://%s:%s@chapter4-mongo:27017/", user, pass)
+	uri := fmt.Sprintf("mongodb://%s:%s@mongo:27017/", user, pass)
 	clientOptions := options.Client().ApplyURI(uri)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
