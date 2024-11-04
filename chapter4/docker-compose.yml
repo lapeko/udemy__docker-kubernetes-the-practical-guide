@@ -12,12 +12,14 @@ services:
   backend:
     build: ./backend
     environment:
+      - PORT=80
       - MONGO_USER=mongoadmin
       - MONGO_PASS=secret
+      - MONGO_HOST=mongo
     volumes:
       - ./backend:/app
     ports:
-      - "3000:3000"
+      - "80:80"
     depends_on:
       - mongo
 

@@ -10,7 +10,10 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-ENV PORT=3000
+ENV PORT=80
+ENV MONGO_USER=mongoadmin
+ENV MONGO_PASS=secret
+ENV MONGO_HOST=mongo
 
 EXPOSE $PORT
 
