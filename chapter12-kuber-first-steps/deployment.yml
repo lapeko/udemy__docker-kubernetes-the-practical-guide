@@ -39,3 +39,9 @@ spec:
       containers:
         - name: second-go-node
           image: lapeko/go-server:0.0.2
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
