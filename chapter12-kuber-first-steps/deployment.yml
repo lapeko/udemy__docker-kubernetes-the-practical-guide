@@ -19,9 +19,15 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      app: second-go-app
-      tier: backend
+#    matchLabels:
+#      app: second-go-app
+#      tier: backend
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - second-go-app
+          - first-go-app
   template:
     metadata:
       labels:
