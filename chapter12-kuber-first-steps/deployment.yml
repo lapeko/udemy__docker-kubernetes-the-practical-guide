@@ -1,5 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: go-server
 spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: second-go-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: second-go-app
+        tier: backend
+    spec:
+      containers:
+        - name: second-go-node
+          image: lapeko/go-server:0.0.2
