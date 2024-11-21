@@ -24,6 +24,9 @@ func main() {
 			res.Write([]byte("Unknown resource"))
 		}
 	})
+	http.HandleFunc("/error", func(res http.ResponseWriter, req *http.Request) {
+		os.Exit(1)
+	})
 	log.Printf("Server running on port :%d\n", PORT)
 	log.Fatalln(http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil))
 }
