@@ -29,6 +29,12 @@ spec:
     spec:
       containers:
         - name: go-server
-          image: lapeko/go-server:0.0.3
+          image: lapeko/go-server:0.0.4
           ports:
             - containerPort: 3000
+          volumeMounts:
+            - mountPath: /app/permanent-data
+              name: data-volume
+      volumes:
+        - name: data-volume
+          emptyDir: {}
