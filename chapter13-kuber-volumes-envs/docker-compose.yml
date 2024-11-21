@@ -1,0 +1,11 @@
+services:
+  go-server:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./permanent-data:/app/permanent-data
+
+volumes:
+  data:
