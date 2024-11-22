@@ -33,7 +33,10 @@ spec:
           image: lapeko/go-server:0.0.4
           env:
             - name: DATA_FOLDER
-              value: permanent-data
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config-map
+                  key: data_folder
           ports:
             - containerPort: 3000
           volumeMounts:
@@ -70,3 +73,11 @@ spec:
   resources:
     requests:
       storage: 1Gi
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config-map
+data:
+  data_folder: "permanent-data"
