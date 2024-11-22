@@ -35,9 +35,35 @@ spec:
             - containerPort: 3000
           volumeMounts:
             - mountPath: /app/permanent-data
-              name: data-volume
+              name: go-server-storage
       volumes:
-        - name: data-volume
-          hostPath:
-            path: /data
-            type: DirectoryOrCreate
+        - name: go-server-storage
+          persistentVolumeClaim:
+            claimName: text-data-claim
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: text-data-volume
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: text-data-claim
+spec:
+  storageClassName: ""
+  volumeName: text-data-volume
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
