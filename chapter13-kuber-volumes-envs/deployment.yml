@@ -19,6 +19,7 @@ metadata:
   labels:
     app: go-server-deployment
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: go-server-pod
@@ -37,4 +38,6 @@ spec:
               name: data-volume
       volumes:
         - name: data-volume
-          emptyDir: {}
+          hostPath:
+            path: /data
+            type: DirectoryOrCreate
