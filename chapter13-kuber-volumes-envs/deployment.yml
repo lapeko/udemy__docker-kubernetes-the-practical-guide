@@ -31,6 +31,9 @@ spec:
       containers:
         - name: go-server
           image: lapeko/go-server:0.0.4
+          env:
+            - name: DATA_FOLDER
+              value: permanent-data
           ports:
             - containerPort: 3000
           volumeMounts:

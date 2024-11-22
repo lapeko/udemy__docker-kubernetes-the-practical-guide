@@ -9,7 +9,8 @@ import (
 )
 
 const PORT = 3000
-const TXT_PATH = "./permanent-data/text.txt"
+
+var TXT_PATH = fmt.Sprintf("./%s/text.txt", os.Getenv("DATA_FOLDER"))
 
 func main() {
 	http.HandleFunc("/text", func(res http.ResponseWriter, req *http.Request) {
