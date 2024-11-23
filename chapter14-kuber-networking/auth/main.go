@@ -13,6 +13,7 @@ var PORT = os.Getenv("PORT")
 func main() {
 	fmt.Println("PORT", PORT)
 	r := gin.Default()
+
 	r.GET("/verify-token/:token", func(c *gin.Context) {
 		token, ok := c.Params.Get("token")
 		if !ok {
