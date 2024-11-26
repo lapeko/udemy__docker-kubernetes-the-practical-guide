@@ -23,7 +23,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: AUTH_URL
-              value: "http://localhost:80"
+              value: "http://localhost"
             - name: PORT
               value: "8080"
 
