@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-users-deploy
+spec:
+  selector:
+    matchLabels:
+      app: auth-users-app
+  template:
+    metadata:
+      labels:
+        app: auth-users-app
+    spec:
+      containers:
+        - name: auth
+          image: lapeko/auth
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PORT
+              value: "80"
+        - name: users
+          image: lapeko/users
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: AUTH_URL
+              value: "http://localhost:80"
+            - name: PORT
+              value: "8080"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-app-service
+  labels:
+    app: auth-users-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: auth-users-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
