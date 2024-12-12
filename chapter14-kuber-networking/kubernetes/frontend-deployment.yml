@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deploy
+spec:
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+        - name: frontend
+          image: lapeko/frontend:latest
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: frontend-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
