@@ -1,0 +1,17 @@
+services:
+  auth:
+    container_name: auth-go-api
+    build: ./auth
+    ports:
+      - "8000:3000"
+    environment:
+      TOKEN_KEY: "SECURE_TOKEN"
+
+  users:
+    container_name: users-go-api
+    build: ./users
+    ports:
+      - "8030:3000"
+    environment:
+      AUTH_URL: "http://auth:8000"
+      MONGODB_URI: ""
