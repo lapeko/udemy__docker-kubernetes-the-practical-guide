@@ -3,6 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
@@ -20,9 +21,14 @@ type GetHashedPassword struct {
 
 func getHashedPassword(c *gin.Context) {
 	var body GetHashedPassword
-	err := c.ShouldBind(&body)
 
-	if err != nil {
+	if err := c.ShouldBind(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
 		return
 	}
@@ -44,18 +50,18 @@ type GetToken struct {
 
 func getToken(c *gin.Context) {
 	var body GetToken
-	err := c.ShouldBind(&body)
-
-	fmt.Println(0)
-
-	if err != nil {
+	if err := c.ShouldBind(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
 		return
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(body.HashedPassword), []byte(body.Password))
+	validate := validator.New()
+	if err := validate.Struct(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
+		return
+	}
 
-	if err != nil {
+	if err := bcrypt.CompareHashAndPassword([]byte(body.HashedPassword), []byte(body.Password)); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
 		return
 	}
@@ -81,16 +87,12 @@ type GetTokenConfirmation struct {
 
 func getTokenConfirmation(c *gin.Context) {
 	var body GetTokenConfirmation
-	err := c.ShouldBind(&body)
-
-	if err != nil {
+	if err := c.ShouldBind(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
 		return
 	}
 
-	err = verifyToken(body.Token)
-
-	if err != nil {
+	if err := verifyToken(body.Token); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
 		return
 	}
