@@ -14,4 +14,4 @@ services:
       - "8030:3000"
     environment:
       AUTH_URL: "http://auth:3000"
-      MONGODB_URI: "${MONGODB_URI}"
+      MONGODB_URI: "mongodb+srv://developer:t3S5MPctj8Ps0jPB@cluster0.qzhzb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"

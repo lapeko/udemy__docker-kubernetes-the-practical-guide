@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-deployment
+spec:
+  selector:
+    matchLabels:
+      app: auth-app
+  template:
+    metadata:
+      labels:
+        app: auth-app
+    spec:
+      containers:
+        - name: auth
+          image: lapeko/auth:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TOKEN_KEY
+              value: "SECURE TOKEN"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  labels:
+    app: auth-app
+spec:
+  type: ClusterIP
+  selector:
+    app: auth-app
+  ports:
+    - protocol: TCP
+      targetPort: 3000
+      port: 3000
