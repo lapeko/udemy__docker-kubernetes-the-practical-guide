@@ -16,7 +16,7 @@ var (
 )
 
 type GetHashedPassword struct {
-	Password string `json:"password" validate:"min=4"`
+	Password string `json:"password" validate:"required,min=4"`
 }
 
 func getHashedPassword(c *gin.Context) {
@@ -44,8 +44,8 @@ func getHashedPassword(c *gin.Context) {
 }
 
 type GetToken struct {
-	Password       string `json:"password" validate:"min=4"`
-	HashedPassword string `json:"hashedPassword"`
+	Password       string `json:"password" validate:"required,min=4"`
+	HashedPassword string `json:"hashedPassword" validate:"required"`
 }
 
 func getToken(c *gin.Context) {
@@ -82,12 +82,18 @@ func getToken(c *gin.Context) {
 }
 
 type GetTokenConfirmation struct {
-	Token string `json:"token"`
+	Token string `json:"token" validate:"required"`
 }
 
 func getTokenConfirmation(c *gin.Context) {
 	var body GetTokenConfirmation
 	if err := c.ShouldBind(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(&body); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"response": nil, "error": err.Error()})
 		return
 	}

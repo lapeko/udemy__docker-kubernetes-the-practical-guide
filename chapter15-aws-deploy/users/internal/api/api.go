@@ -26,6 +26,13 @@ func New() *Api {
 	return api
 }
 
+func getApiStorage() *storage.Storage {
+	if api == nil {
+		log.Fatalln("API instance is not initialized")
+	}
+	return api.storage
+}
+
 func (a *Api) ConnectStorage() error {
 	if a.storage == nil {
 		s := storage.NewStorage()
